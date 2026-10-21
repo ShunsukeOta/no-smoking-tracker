@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ChartNoAxesColumnIncreasing, ChevronLeft, CigaretteOff, Leaf, Moon, RotateCcw, Settings2, Sun, WifiOff } from 'lucide-react'
+import { ChartNoAxesColumnIncreasing, ChevronLeft, CigaretteOff, Moon, RotateCcw, Settings2, Sun, WifiOff } from 'lucide-react'
 import Dashboard from '@/components/Dashboard'
 import ProfileForm from '@/components/ProfileForm'
 import { Button } from '@/components/ui/button'
@@ -100,7 +100,7 @@ export default function App() {
   return <div className="min-h-dvh bg-background text-foreground transition-colors duration-200">
     <header className="sticky top-0 z-20 border-b border-border/70 bg-background/95 backdrop-blur-xl"><div className="mx-auto flex h-[64px] max-w-[1040px] items-center justify-between gap-3 px-4 sm:px-8"><Brand />
       <div className="flex items-center gap-2">
-        {profile ? <nav aria-label="メインメニュー" className="flex items-center gap-0.5 rounded-xl bg-muted p-1"><button type="button" aria-current={screen === 'dashboard' ? 'page' : undefined} onClick={() => { setScreen('dashboard'); window.scrollTo(0, 0) }} className={`inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-xs font-semibold transition-colors ${screen === 'dashboard' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}><ChartNoAxesColumnIncreasing size={14} />記録</button><button type="button" aria-current={screen === 'settings' ? 'page' : undefined} onClick={() => { setScreen('settings'); window.scrollTo(0, 0) }} className={`inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-xs font-semibold transition-colors ${screen === 'settings' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}><Settings2 size={14} />設定</button></nav> : <span className="hidden text-[10px] font-semibold tracking-wide text-primary sm:inline">STAY SMOKE-FREE</span>}
+        {profile ? <nav aria-label="メインメニュー" className="flex items-center gap-0.5 rounded-xl bg-muted p-1"><button type="button" aria-current={screen === 'dashboard' ? 'page' : undefined} onClick={() => { setScreen('dashboard'); window.scrollTo(0, 0) }} className={`inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-xs font-semibold transition-colors ${screen === 'dashboard' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}><ChartNoAxesColumnIncreasing size={14} />記録</button><button type="button" aria-current={screen === 'settings' ? 'page' : undefined} onClick={() => { setScreen('settings'); window.scrollTo(0, 0) }} className={`inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-xs font-semibold transition-colors ${screen === 'settings' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}><Settings2 size={14} />設定</button></nav> : null}
         <Button type="button" variant="outline" size="icon" className="h-9 w-9 rounded-xl bg-card" onClick={toggleTheme} aria-label={isDark ? 'ライトモードに切り替える' : 'ダークモードに切り替える'} title={isDark ? 'ライトモード' : 'ダークモード'}>{isDark ? <Sun size={16} /> : <Moon size={16} />}</Button>
       </div>
     </div></header>
@@ -108,6 +108,6 @@ export default function App() {
     <main className={`mx-auto w-full px-4 sm:px-8 ${!profile ? 'flex min-h-[calc(100dvh-144px)] max-w-[1040px] items-center justify-center py-10 sm:py-14' : 'max-w-[880px] pb-4'}`}>
       {!profile ? <ProfileForm error={storageError} onSubmit={(next) => { try { updateProfile(next) } catch { /* Inline storage warning already set. */ } }} /> : screen === 'settings' ? <Settings profile={profile} onSave={updateProfile} onBack={() => setScreen('dashboard')} onClear={reset} /> : <Dashboard profile={profile} now={now} />}
     </main>
-    <footer className="mx-auto max-w-[880px] px-4 pb-7 text-center sm:px-8"><Separator className="mb-4" /><p className="flex items-center justify-center gap-2 text-[10px] text-muted-foreground"><Leaf size={12} />禁煙ログ <span className="opacity-60">© 2026</span> すこしずつ、着実に。</p></footer>
+    <footer className="mx-auto max-w-[880px] px-4 pb-7 text-center sm:px-8"><Separator className="mb-4" /><p className="flex items-center justify-center gap-2 text-[10px] text-muted-foreground">禁煙ログ <span className="opacity-60">© 2026</span></p></footer>
   </div>
 }
