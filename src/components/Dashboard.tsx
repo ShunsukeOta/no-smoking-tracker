@@ -47,9 +47,7 @@ export default function Dashboard({ profile, now }: { profile: QuitProfile; now:
     <div className="space-y-4 pb-10 sm:space-y-5">
       <section className="mb-5 flex items-end justify-between gap-3 pt-5 sm:pt-6">
         <div>
-          <p className="mb-1.5 flex items-center gap-1.5 text-[10px] font-semibold tracking-[.12em] text-primary"><Leaf size={13} /> YOUR PROGRESS</p>
-          <h1 className="text-[23px] font-bold tracking-[-.05em] sm:text-[27px]">今日も、吸わない。</h1>
-          <p className="mt-1 text-xs text-muted-foreground">{profile.age}歳から始めた、小さな大きな変化。</p>
+          <h1 className="text-[21px] font-bold tracking-[-.05em] sm:text-[24px]">禁煙記録</h1>
         </div>
         <Badge variant="secondary" className="mb-1 shrink-0 border border-primary/10 bg-primary/10 py-1.5 text-primary"><span className="mr-1.5 h-1.5 w-1.5 rounded-full bg-primary" />継続中</Badge>
       </section>
@@ -74,7 +72,7 @@ export default function Dashboard({ profile, now }: { profile: QuitProfile; now:
           <div className="mt-6 border-t border-white/15 pt-4 sm:mt-7">
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2"><span className="text-[11px] font-medium text-[#bddcca]">次のマイルストーン</span><span className="text-[11px] font-semibold tabular-nums text-[#c5efa7]">{next ? next.milestone.label : 'すべて達成！'}</span></div>
             <Progress value={next?.progress ?? 100} className="h-2 bg-white/15 [&>div]:bg-[#b8ef97]" />
-            <div className="mt-3 flex flex-wrap items-center justify-between gap-2"><p className="text-xs font-medium text-[#ecfff3]">{next?.milestone.title ?? '積み重ねた日々が力になっています'}</p><span className="text-[11px] tabular-nums text-[#a6c7b5]">{Math.floor(next?.progress ?? 100)}%</span></div>
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-2"><p className="text-xs font-medium text-[#ecfff3]">{next?.milestone.title ?? 'すべて達成'}</p><span className="text-[11px] tabular-nums text-[#a6c7b5]">{Math.floor(next?.progress ?? 100)}%</span></div>
             {next && <div className="mt-2 flex flex-wrap items-baseline gap-1.5 text-[#c5efa7]"><span className="text-[11px] text-[#b9d7c4]">達成まで</span><span className="font-mono text-[16px] font-semibold tracking-[-.025em] tabular-nums sm:text-[18px]">{formatRemaining(next.remainingMs)}</span></div>}
           </div>
         </div>
@@ -130,7 +128,6 @@ export default function Dashboard({ profile, now }: { profile: QuitProfile; now:
       </section>
 
       <section className="rounded-[18px] border border-border bg-card p-4 sm:p-5"><div className="flex items-center gap-2 text-primary"><CalendarCheck2 size={17} /><span className="text-[13px] font-semibold">あなたの禁煙記録</span></div><p className="mt-2.5 text-[13px] leading-6 text-muted-foreground">{formatDateTime(new Date(profile.quitAt))} からスタート</p><div className="mt-3 flex items-center justify-between rounded-xl bg-muted px-3.5 py-2.5 text-[11px] text-muted-foreground"><div className="flex items-center gap-2"><BadgeCheck size={14} />あなたの記録はこの端末だけに保存</div><ArrowRight size={14} /></div></section>
-      <div className="flex items-center justify-center gap-2 pb-2 text-center text-[11px] text-muted-foreground"><Leaf size={13} /> 1本吸わない。その積み重ねが未来を変えます。</div>
     </div>
   )
 }
