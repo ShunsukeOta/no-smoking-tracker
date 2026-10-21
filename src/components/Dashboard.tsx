@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { ArrowDownRight, ArrowRight, BadgeCheck, CalendarCheck2, Check, CheckCircle2, ChevronDown, ChevronUp, CigaretteOff, Clock3, Coins, Heart, Info, Leaf } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
@@ -23,16 +23,31 @@ function elapsedParts(elapsedMs: number) {
   }
 }
 
+/** Keep every metric label and value in the same grid rows on small screens. */
+function MetricCard({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <Card className="min-w-0 rounded-[14px]">
+      <CardContent className="grid h-[88px] min-w-0 grid-rows-[32px_28px] content-center justify-items-center gap-1.5 px-1.5 py-2 text-center sm:h-[96px] sm:grid-rows-[34px_30px] sm:px-3">
+        <p className="flex h-full w-full items-center justify-center text-center text-[9px] font-medium leading-[1.3] text-muted-foreground sm:text-[11px]">{label}</p>
+        <div className="flex h-full w-full min-w-0 items-center justify-center whitespace-nowrap tabular-nums">{children}</div>
+      </CardContent>
+    </Card>
+  )
+}
+
 function ReclaimedTime({ seconds }: { seconds: number }) {
   const wholeSeconds = Math.floor(seconds)
   const hours = Math.floor(wholeSeconds / 3600)
   const minutes = Math.floor((wholeSeconds % 3600) / 60)
   const remainingSeconds = wholeSeconds % 60
-  return <div className="flex flex-wrap items-baseline gap-x-0.5 gap-y-0.5 tabular-nums leading-tight" aria-label={`${hours}時間${minutes}分${remainingSeconds}秒`}>
-    {hours > 0 && <><strong className="text-[15px] font-semibold tracking-tight sm:text-[19px]">{number(hours)}</strong><span className="text-[9px] text-muted-foreground sm:text-[10px]">時間</span></>}
-    {(minutes > 0 || hours > 0) && <><strong className="text-[15px] font-semibold tracking-tight sm:text-[19px]">{minutes}</strong><span className="text-[9px] text-muted-foreground sm:text-[10px]">分</span></>}
-    <strong className="text-[15px] font-semibold tracking-tight sm:text-[19px]">{pad(remainingSeconds)}</strong><span className="text-[9px] text-muted-foreground sm:text-[10px]">秒</span>
-  </div>
+  const numberClass = hours >= 1000 ? 'text-[10px] sm:text-[15px]' : 'text-[clamp(11px,3.3vw,17px)]'
+  return (
+    <div className="flex max-w-full items-baseline justify-center whitespace-nowrap leading-none tabular-nums" aria-label={`${hours}時間${minutes}分${remainingSeconds}秒`}>
+      {hours > 0 && <><strong className={`${numberClass} font-semibold tracking-[-.04em]`}>{number(hours)}</strong><span className="text-[8px] text-muted-foreground sm:text-[9px]">時間</span></>}
+      {(minutes > 0 || hours > 0) && <><strong className={`${numberClass} font-semibold tracking-[-.04em]`}>{pad(minutes)}</strong><span className="text-[8px] text-muted-foreground sm:text-[9px]">分</span></>}
+      <strong className={`${numberClass} font-semibold tracking-[-.04em]`}>{pad(remainingSeconds)}</strong><span className="text-[8px] text-muted-foreground sm:text-[9px]">秒</span>
+    </div>
+  )
 }
 
 export default function Dashboard({ profile, now }: { profile: QuitProfile; now: number }) {
@@ -79,20 +94,24 @@ export default function Dashboard({ profile, now }: { profile: QuitProfile; now:
       </section>
 
       <section aria-label="禁煙の成果" className="grid grid-cols-3 gap-2 sm:gap-3">
-        <Card className="min-w-0 rounded-[14px]"><CardContent className="min-w-0 p-2.5 sm:p-3.5">
-          <p className="text-[10px] leading-4 text-muted-foreground sm:text-[11px]">節約金額</p>
-          <div className="mt-1 flex items-baseline gap-0.5 tabular-nums whitespace-nowrap">
-            <strong className="min-w-0 font-semibold tracking-[-.055em]"><span className="text-[clamp(12px,3.6vw,20px)]">{savedYenWhole}</span><span className="text-[10px] sm:text-xs">.{savedYenFraction}</span></strong><span className="text-[9px] text-muted-foreground">円</span>
+        <MetricCard label="節約金額">
+          <div className="flex items-baseline justify-center whitespace-nowrap leading-none">
+            <strong className="font-semibold tracking-[-.05em]">
+              <span className="text-[clamp(14px,4vw,20px)]">{savedYenWhole}</span>
+              <span className="text-[10px] sm:text-[12px]">.{savedYenFraction}</span>
+            </strong>
+            <span className="ml-0.5 text-[9px] text-muted-foreground">円</span>
           </div>
-        </CardContent></Card>
-        <Card className="min-w-0 rounded-[14px]"><CardContent className="min-w-0 p-2.5 sm:p-3.5">
-          <p className="text-[10px] leading-4 text-muted-foreground sm:text-[11px]">吸わなかった本数</p>
-          <div className="mt-1 flex items-baseline gap-0.5 tabular-nums"><strong className="text-[17px] font-semibold tracking-[-.04em] sm:text-[20px]">{number(stats.avoidedCigarettes)}</strong><span className="text-[9px] text-muted-foreground">本</span></div>
-        </CardContent></Card>
-        <Card className="min-w-0 rounded-[14px]"><CardContent className="min-w-0 p-2.5 sm:p-3.5">
-          <p className="text-[10px] leading-4 text-muted-foreground sm:text-[11px]">取り戻した時間</p>
-          <div className="mt-1"><ReclaimedTime seconds={stats.reclaimedSecondsPrecise} /></div>
-        </CardContent></Card>
+        </MetricCard>
+        <MetricCard label="吸わなかった本数">
+          <div className="flex items-baseline justify-center whitespace-nowrap leading-none">
+            <strong className="text-[clamp(14px,4vw,20px)] font-semibold tracking-[-.05em]">{number(stats.avoidedCigarettes)}</strong>
+            <span className="ml-0.5 text-[9px] text-muted-foreground">本</span>
+          </div>
+        </MetricCard>
+        <MetricCard label="取り戻した時間">
+          <ReclaimedTime seconds={stats.reclaimedSecondsPrecise} />
+        </MetricCard>
       </section>
       <p className="-mt-1 text-[10px] leading-4 text-muted-foreground">※ 節約額・本数・時間は過去の喫煙ペースに基づく連続的な推計値です。実際に部分的な1本を節約したことを示すものではありません。</p>
 
