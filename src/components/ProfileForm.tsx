@@ -49,7 +49,7 @@ export default function ProfileForm({ initial, onSubmit, onCancel, error }: Prop
           <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-[22px] bg-primary/10 text-primary shadow-soft">
             <CigaretteOff size={26} strokeWidth={1.8} />
           </div>
-          <Badge variant="secondary" className="mb-4 border border-primary/10 bg-primary/10 px-3 py-1.5 text-primary border-primary/10">YOUR NEW CHAPTER</Badge>
+          <Badge variant="secondary" className="mb-4 border border-primary/10 bg-primary/10 px-3 py-1.5 text-primary">YOUR NEW CHAPTER</Badge>
           <h1 className="text-[27px] font-bold leading-[1.35] tracking-[-.055em] sm:text-[32px]">今日から、<br />吸わない自分に。</h1>
           <p className="mt-4 text-[13px] leading-6 text-muted-foreground">まずは4つだけ教えてください。<br />あなたの禁煙記録を、ここから始めましょう。</p>
         </div>
