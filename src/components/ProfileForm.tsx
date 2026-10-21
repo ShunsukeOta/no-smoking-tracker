@@ -1,10 +1,9 @@
 import { useState, type FormEvent } from 'react'
-import { ArrowRight, CalendarDays, CigaretteOff, CircleHelp, LockKeyhole, ShieldCheck } from 'lucide-react'
+import { ArrowRight, CalendarDays, LockKeyhole } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Badge } from '@/components/ui/badge'
 import { isValidProfile, toLocalDatetimeValue, type QuitProfile } from '@/lib/tracker'
 
 type Props = {
@@ -44,16 +43,7 @@ export default function ProfileForm({ initial, onSubmit, onCancel, error }: Prop
 
   return (
     <div className="mx-auto w-full max-w-[545px] animate-in">
-      {!initial && (
-        <div className="mb-8 text-center sm:mb-10">
-          <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-[22px] bg-primary/10 text-primary shadow-soft">
-            <CigaretteOff size={26} strokeWidth={1.8} />
-          </div>
-          <Badge variant="secondary" className="mb-4 border border-primary/10 bg-primary/10 px-3 py-1.5 text-primary">YOUR NEW CHAPTER</Badge>
-          <h1 className="text-[27px] font-bold leading-[1.35] tracking-[-.055em] sm:text-[32px]">今日から、<br />吸わない自分に。</h1>
-          <p className="mt-4 text-[13px] leading-6 text-muted-foreground">まずは4つだけ教えてください。<br />あなたの禁煙記録を、ここから始めましょう。</p>
-        </div>
-      )}
+      {!initial && <h1 className="mb-6 text-[22px] font-bold tracking-tight">初期設定</h1>}
 
       <Card className="overflow-hidden border-border shadow-float">
         <CardContent className="p-5 sm:p-8">
@@ -99,10 +89,6 @@ export default function ProfileForm({ initial, onSubmit, onCancel, error }: Prop
       <div className="mt-5 flex items-center justify-center gap-2 text-xs leading-6 text-muted-foreground">
         <LockKeyhole size={14} /> データはこの端末だけに保存されます
       </div>
-      {!initial && <div className="mx-auto mt-9 grid max-w-md grid-cols-2 gap-3 text-left">
-        <div className="flex items-start gap-2.5"><ShieldCheck size={17} className="mt-0.5 shrink-0 text-primary" /><p className="text-xs leading-5 text-muted-foreground">アカウント登録不要<br />外部へのデータ送信なし</p></div>
-        <div className="flex items-start gap-2.5"><CircleHelp size={17} className="mt-0.5 shrink-0 text-primary" /><p className="text-xs leading-5 text-muted-foreground">インストール対応<br />オフラインでも使えます</p></div>
-      </div>}
     </div>
   )
 }
