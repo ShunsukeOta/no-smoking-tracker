@@ -27,9 +27,9 @@ function elapsedParts(elapsedMs: number) {
 function MetricCard({ label, children }: { label: string; children: ReactNode }) {
   return (
     <Card className="min-w-0 rounded-[14px]">
-      <CardContent className="grid h-[88px] min-w-0 grid-rows-[32px_28px] content-center justify-items-center gap-1.5 px-1.5 py-2 text-center sm:h-[96px] sm:grid-rows-[34px_30px] sm:px-3">
-        <p className="flex h-full w-full items-center justify-center text-center text-[9px] font-medium leading-[1.3] text-muted-foreground sm:text-[11px]">{label}</p>
-        <div className="flex h-full w-full min-w-0 items-center justify-center whitespace-nowrap tabular-nums">{children}</div>
+      <CardContent className="flex min-w-0 flex-col items-center justify-center gap-1 px-1.5 py-2.5 text-center sm:px-3 sm:py-3">
+        <p className="w-full text-center text-[9px] font-medium leading-[13px] text-muted-foreground sm:text-[10px]">{label}</p>
+        <div className="flex min-h-[21px] w-full min-w-0 items-center justify-center whitespace-nowrap tabular-nums">{children}</div>
       </CardContent>
     </Card>
   )
