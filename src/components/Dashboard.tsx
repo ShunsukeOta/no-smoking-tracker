@@ -8,9 +8,7 @@ import { Separator } from '@/components/ui/separator'
 import { formatDateTime, formatRemaining, getNextMilestone, getQuitStats, MILESTONES, type QuitProfile } from '@/lib/tracker'
 
 const number = new Intl.NumberFormat('ja-JP').format
-const yenFormat = new Intl.NumberFormat('ja-JP', { minimumFractionDigits: 3, maximumFractionDigits: 3 })
-const cigarettesFormat = new Intl.NumberFormat('ja-JP', { minimumFractionDigits: 5, maximumFractionDigits: 5 })
-const secondsFormat = new Intl.NumberFormat('ja-JP', { minimumIntegerDigits: 2, minimumFractionDigits: 2, maximumFractionDigits: 2 })
+const yenFormat = new Intl.NumberFormat('ja-JP', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 const pad = (n: number) => String(n).padStart(2, '0')
 
 function elapsedParts(elapsedMs: number) {
@@ -26,13 +24,14 @@ function elapsedParts(elapsedMs: number) {
 }
 
 function ReclaimedTime({ seconds }: { seconds: number }) {
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  const remainingSeconds = seconds % 60
+  const wholeSeconds = Math.floor(seconds)
+  const hours = Math.floor(wholeSeconds / 3600)
+  const minutes = Math.floor((wholeSeconds % 3600) / 60)
+  const remainingSeconds = wholeSeconds % 60
   return <div className="flex flex-wrap items-baseline gap-x-1 gap-y-0.5 tabular-nums">
     {hours > 0 && <><strong className="text-[23px] font-semibold tracking-tight sm:text-[25px]">{number(hours)}</strong><span className="text-xs text-muted-foreground">時間</span></>}
     {(minutes > 0 || hours > 0) && <><strong className="text-[23px] font-semibold tracking-tight sm:text-[25px]">{minutes}</strong><span className="text-xs text-muted-foreground">分</span></>}
-    <strong className="text-[23px] font-semibold tracking-tight sm:text-[25px]">{secondsFormat.format(remainingSeconds)}</strong><span className="text-xs text-muted-foreground">秒</span>
+    <strong className="text-[23px] font-semibold tracking-tight sm:text-[25px]">{pad(remainingSeconds)}</strong><span className="text-xs text-muted-foreground">秒</span>
   </div>
 }
 
@@ -42,6 +41,7 @@ export default function Dashboard({ profile, now }: { profile: QuitProfile; now:
   const elapsed = elapsedParts(stats.elapsedMs)
   const next = getNextMilestone(stats.elapsedDays)
   const visibleMilestones = showAll ? MILESTONES : MILESTONES.slice(0, 6)
+  const [savedYenWhole, savedYenFraction] = yenFormat.format(stats.savedYenPrecise).split('.')
 
   return (
     <div className="space-y-4 pb-10 sm:space-y-5">
@@ -82,13 +82,13 @@ export default function Dashboard({ profile, now }: { profile: QuitProfile; now:
         <Card className="col-span-2 rounded-[18px] sm:col-span-1"><CardContent className="p-4 sm:p-5">
           <div className="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"><Wallet size={18} /></div>
           <p className="text-[11px] text-muted-foreground">節約できたお金</p>
-          <div className="mt-1.5 flex flex-wrap items-baseline gap-1 tabular-nums"><strong className="text-[27px] font-semibold tracking-[-.065em] sm:text-[25px]">{yenFormat.format(stats.savedYenPrecise)}</strong><span className="text-xs text-muted-foreground">円</span></div>
-          <div className="mt-2 flex items-center gap-1 text-[10px] text-primary"><TrendingUp size={13} /> 0.001円単位で更新</div>
+          <div className="mt-1.5 flex flex-wrap items-baseline gap-1 tabular-nums"><strong className="font-semibold tracking-[-.065em]"><span className="text-[27px] sm:text-[25px]">{savedYenWhole}</span><span className="text-[15px] sm:text-[14px]">.{savedYenFraction}</span></strong><span className="text-xs text-muted-foreground">円</span></div>
+          <div className="mt-2 flex items-center gap-1 text-[10px] text-primary"><TrendingUp size={13} /> 1秒ごとに更新</div>
         </CardContent></Card>
         <Card className="rounded-[18px]"><CardContent className="p-4 sm:p-5">
           <div className="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-300"><CigaretteOff size={18} /></div>
           <p className="text-[11px] text-muted-foreground">吸わなかった本数（推計）</p>
-          <div className="mt-1.5 flex flex-wrap items-baseline gap-1 tabular-nums"><strong className="text-[23px] font-semibold tracking-[-.06em] sm:text-[22px]">{cigarettesFormat.format(stats.avoidedCigarettesPrecise)}</strong><span className="text-xs text-muted-foreground">本</span></div>
+          <div className="mt-1.5 flex flex-wrap items-baseline gap-1 tabular-nums"><strong className="text-[23px] font-semibold tracking-[-.06em] sm:text-[22px]">{number(stats.avoidedCigarettes)}</strong><span className="text-xs text-muted-foreground">本</span></div>
           <p className="mt-2 text-[10px] text-muted-foreground">以前の1日{profile.cigarettesPerDay}本から試算</p>
         </CardContent></Card>
         <Card className="rounded-[18px]"><CardContent className="p-4 sm:p-5">
