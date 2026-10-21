@@ -18,8 +18,11 @@ export interface QuitStats {
   minutes: number
   seconds: number
   avoidedCigarettes: number
+  avoidedCigarettesPrecise: number
   savedYen: number
+  savedYenPrecise: number
   reclaimedMinutes: number
+  reclaimedSecondsPrecise: number
   annualSavings: number
 }
 
@@ -67,8 +70,11 @@ export function getQuitStats(profile: QuitProfile, now: number = Date.now()): Qu
     minutes: Math.floor((elapsedMs % HOUR) / MINUTE),
     seconds: Math.floor((elapsedMs % MINUTE) / 1000),
     avoidedCigarettes: Math.floor(avoided),
+    avoidedCigarettesPrecise: avoided,
     savedYen: Math.floor(avoided / 20 * profile.packPrice),
+    savedYenPrecise: avoided / 20 * profile.packPrice,
     reclaimedMinutes: Math.floor(avoided * 5),
+    reclaimedSecondsPrecise: avoided * 5 * 60,
     annualSavings: Math.round(profile.cigarettesPerDay / 20 * profile.packPrice * 365),
   }
 }
@@ -82,12 +88,17 @@ export function getNextMilestone(elapsedDays: number) {
   return { milestone: next, previous, progress, remainingMs: Math.max(0, (next.days - elapsedDays) * DAY) }
 }
 
+/** Always show a second-accurate countdown, including for long milestones. */
 export function formatRemaining(ms: number): string {
-  const totalHours = Math.floor(ms / HOUR)
-  const remainingMinutes = Math.ceil((ms % HOUR) / MINUTE)
-  if (totalHours >= 48) return `あと${Math.ceil(ms / DAY)}日`
-  if (totalHours >= 1) return `あと${totalHours}時間${remainingMinutes > 0 ? `${remainingMinutes}分` : ''}`
-  return `あと${Math.max(1, Math.ceil(ms / MINUTE))}分`
+  const remaining = Math.max(0, Math.ceil(ms / 1000))
+  const days = Math.floor(remaining / 86400)
+  const hours = Math.floor((remaining % 86400) / 3600)
+  const minutes = Math.floor((remaining % 3600) / 60)
+  const seconds = remaining % 60
+  const pad = (n: number) => String(n).padStart(2, '0')
+  if (days > 0) return `${days}日 ${pad(hours)}時間 ${pad(minutes)}分 ${pad(seconds)}秒`
+  if (hours > 0) return `${hours}時間 ${pad(minutes)}分 ${pad(seconds)}秒`
+  return `${minutes}分 ${pad(seconds)}秒`
 }
 
 export function formatDateTime(date: Date): string {

@@ -46,18 +46,18 @@ export default function ProfileForm({ initial, onSubmit, onCancel, error }: Prop
     <div className="mx-auto w-full max-w-[545px] animate-in">
       {!initial && (
         <div className="mb-8 text-center sm:mb-10">
-          <div className="mb-5 inline-flex h-16 w-16 items-center justify-center rounded-[22px] bg-[#e2efe6] text-[#177452] shadow-soft">
-            <CigaretteOff size={30} strokeWidth={1.8} />
+          <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-[22px] bg-primary/10 text-primary shadow-soft">
+            <CigaretteOff size={26} strokeWidth={1.8} />
           </div>
-          <Badge variant="secondary" className="mb-4 border border-emerald-100 bg-[#e8f5ec] px-3 py-1.5 text-[#1b7655]">YOUR NEW CHAPTER</Badge>
-          <h1 className="text-[31px] font-bold leading-[1.35] tracking-[-.055em] sm:text-[38px]">今日から、<br />吸わない自分に。</h1>
-          <p className="mt-4 text-sm leading-7 text-muted-foreground">まずは4つだけ教えてください。<br />あなたの禁煙記録を、ここから始めましょう。</p>
+          <Badge variant="secondary" className="mb-4 border border-primary/10 bg-primary/10 px-3 py-1.5 text-primary border-primary/10">YOUR NEW CHAPTER</Badge>
+          <h1 className="text-[27px] font-bold leading-[1.35] tracking-[-.055em] sm:text-[32px]">今日から、<br />吸わない自分に。</h1>
+          <p className="mt-4 text-[13px] leading-6 text-muted-foreground">まずは4つだけ教えてください。<br />あなたの禁煙記録を、ここから始めましょう。</p>
         </div>
       )}
 
-      <Card className="overflow-hidden border-[#e6ebe6] shadow-float">
+      <Card className="overflow-hidden border-border shadow-float">
         <CardContent className="p-5 sm:p-8">
-          {initial && <div className="mb-7"><h2 className="text-xl font-bold tracking-tight">記録を編集</h2><p className="mt-2 text-sm text-muted-foreground">変更すると統計が自動で再計算されます。</p></div>}
+          {initial && <div className="mb-7"><h2 className="text-lg font-bold tracking-tight">記録を編集</h2><p className="mt-2 text-sm text-muted-foreground">変更すると統計が自動で再計算されます。</p></div>}
           <form onSubmit={submit} className="space-y-6">
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="space-y-2.5">
@@ -84,12 +84,12 @@ export default function ProfileForm({ initial, onSubmit, onCancel, error }: Prop
             </div>
             <div className="space-y-2.5">
               <div className="flex items-center gap-2"><Label htmlFor="quitAt">最後に吸った日時 <span className="ml-1 text-primary">*</span></Label><CalendarDays size={15} className="text-muted-foreground" /></div>
-              <Input id="quitAt" type="datetime-local" required max={toLocalDatetimeValue(new Date())} value={quitAt} onChange={(e) => setQuitAt(e.target.value)} className="text-[15px]" />
+              <Input id="quitAt" type="datetime-local" required max={toLocalDatetimeValue(new Date())} value={quitAt} onChange={(e) => setQuitAt(e.target.value)} className="text-[13px]" />
               <p className="text-xs leading-5 text-muted-foreground">この日時から禁煙時間をカウントします。</p>
             </div>
 
-            {(formError || error) && <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{formError || error}</p>}
-            <Button type="submit" size="lg" className="mt-2 w-full rounded-xl bg-[#1e7656] hover:bg-[#14563f]">
+            {(formError || error) && <p role="alert" className="rounded-xl bg-destructive/10 px-4 py-3 text-[13px] text-destructive">{formError || error}</p>}
+            <Button type="submit" size="lg" className="mt-2 w-full rounded-xl bg-primary text-primary-foreground hover:bg-primary/90">
               {initial ? '変更を保存する' : '禁煙記録をはじめる'} <ArrowRight size={18} className="ml-1" />
             </Button>
             {onCancel && <Button type="button" variant="ghost" className="w-full" onClick={onCancel}>キャンセル</Button>}
@@ -100,8 +100,8 @@ export default function ProfileForm({ initial, onSubmit, onCancel, error }: Prop
         <LockKeyhole size={14} /> データはこの端末だけに保存されます
       </div>
       {!initial && <div className="mx-auto mt-9 grid max-w-md grid-cols-2 gap-3 text-left">
-        <div className="flex items-start gap-2.5"><ShieldCheck size={17} className="mt-0.5 shrink-0 text-[#277c5d]" /><p className="text-xs leading-5 text-muted-foreground">アカウント登録不要<br />外部へのデータ送信なし</p></div>
-        <div className="flex items-start gap-2.5"><CircleHelp size={17} className="mt-0.5 shrink-0 text-[#277c5d]" /><p className="text-xs leading-5 text-muted-foreground">インストール対応<br />オフラインでも使えます</p></div>
+        <div className="flex items-start gap-2.5"><ShieldCheck size={17} className="mt-0.5 shrink-0 text-primary" /><p className="text-xs leading-5 text-muted-foreground">アカウント登録不要<br />外部へのデータ送信なし</p></div>
+        <div className="flex items-start gap-2.5"><CircleHelp size={17} className="mt-0.5 shrink-0 text-primary" /><p className="text-xs leading-5 text-muted-foreground">インストール対応<br />オフラインでも使えます</p></div>
       </div>}
     </div>
   )

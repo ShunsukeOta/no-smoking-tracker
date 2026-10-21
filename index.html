@@ -10,6 +10,18 @@
     <meta name="apple-mobile-web-app-title" content="禁煙ログ" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <script>
+      // Resolve saved/system appearance before React and CSS paint to avoid flashes.
+      try {
+        const saved = localStorage.getItem('no-smoking-tracker:theme');
+        const dark = saved === 'dark' || (saved !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#101815' : '#f7f8f6');
+      } catch {
+        if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark');
+      }
+    </script>
     <title>禁煙ログ | 今日も、吸わない。</title>
   </head>
   <body>

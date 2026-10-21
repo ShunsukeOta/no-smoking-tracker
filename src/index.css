@@ -23,13 +23,34 @@
     --ring: 161 62% 28%;
     --radius: 1rem;
   }
+  .dark {
+    --background: 155 19% 8%;
+    --foreground: 150 16% 93%;
+    --card: 157 17% 12%;
+    --card-foreground: 150 16% 93%;
+    --primary: 153 50% 62%;
+    --primary-foreground: 155 30% 10%;
+    --secondary: 155 15% 18%;
+    --secondary-foreground: 150 14% 92%;
+    --muted: 155 12% 17%;
+    --muted-foreground: 150 9% 65%;
+    --accent: 150 18% 24%;
+    --accent-foreground: 150 20% 94%;
+    --destructive: 0 62% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 150 12% 23%;
+    --input: 150 12% 28%;
+    --ring: 153 50% 62%;
+  }
   * { @apply border-border; }
   html { scroll-behavior: smooth; }
-  body { @apply bg-background text-foreground antialiased; font-feature-settings: 'palt'; }
+  body { @apply bg-background text-foreground antialiased; font-feature-settings: 'palt'; font-size: 14px; }
   button, input { font: inherit; }
   button { -webkit-tap-highlight-color: transparent; }
   input { min-width: 0; }
   ::selection { background: #c8f4d2; color: #153f31; }
+  .dark ::selection { background: #3c8a65; color: #f2fff7; }
+  .dark { color-scheme: dark; }
 }
 
 @layer utilities {
