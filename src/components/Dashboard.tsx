@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowDownRight, ArrowRight, BadgeCheck, CalendarCheck2, Check, CheckCircle2, ChevronDown, ChevronUp, CigaretteOff, Clock3, Coins, Heart, Info, Leaf, Wallet } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, BadgeCheck, CalendarCheck2, Check, CheckCircle2, ChevronDown, ChevronUp, CigaretteOff, Clock3, Coins, Heart, Info, Leaf } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -80,19 +80,16 @@ export default function Dashboard({ profile, now }: { profile: QuitProfile; now:
 
       <section aria-label="禁煙の成果" className="grid grid-cols-3 gap-2 sm:gap-3">
         <Card className="min-w-0 rounded-[14px]"><CardContent className="min-w-0 p-2.5 sm:p-3.5">
-          <div className="mb-2 inline-flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-300"><Wallet size={13} /></div>
           <p className="text-[10px] leading-4 text-muted-foreground sm:text-[11px]">節約金額</p>
           <div className="mt-1 flex items-baseline gap-0.5 tabular-nums whitespace-nowrap">
             <strong className="min-w-0 font-semibold tracking-[-.055em]"><span className="text-[clamp(12px,3.6vw,20px)]">{savedYenWhole}</span><span className="text-[10px] sm:text-xs">.{savedYenFraction}</span></strong><span className="text-[9px] text-muted-foreground">円</span>
           </div>
         </CardContent></Card>
         <Card className="min-w-0 rounded-[14px]"><CardContent className="min-w-0 p-2.5 sm:p-3.5">
-          <div className="mb-2 inline-flex h-6 w-6 items-center justify-center rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-300"><CigaretteOff size={13} /></div>
           <p className="text-[10px] leading-4 text-muted-foreground sm:text-[11px]">吸わなかった本数</p>
           <div className="mt-1 flex items-baseline gap-0.5 tabular-nums"><strong className="text-[17px] font-semibold tracking-[-.04em] sm:text-[20px]">{number(stats.avoidedCigarettes)}</strong><span className="text-[9px] text-muted-foreground">本</span></div>
         </CardContent></Card>
         <Card className="min-w-0 rounded-[14px]"><CardContent className="min-w-0 p-2.5 sm:p-3.5">
-          <div className="mb-2 inline-flex h-6 w-6 items-center justify-center rounded-lg bg-sky-500/10 text-sky-700 dark:text-sky-300"><Clock3 size={13} /></div>
           <p className="text-[10px] leading-4 text-muted-foreground sm:text-[11px]">取り戻した時間</p>
           <div className="mt-1"><ReclaimedTime seconds={stats.reclaimedSecondsPrecise} /></div>
         </CardContent></Card>
